@@ -4,6 +4,7 @@
 #include <windows.h>
 #endif // WIN32
 #include "avhttp.hpp"
+#include <direct.h>
 
 updater_impl::updater_impl(void)
 	: m_abort(false)
@@ -66,6 +67,11 @@ void updater_impl::pause()
 void updater_impl::resume()
 {
 	m_paused = false;
+}
+
+void updater_impl::join()
+{
+	m_update_thrd.join();
 }
 
 bool updater_impl::check_update(const std::string& l, const std::string& s)
@@ -295,8 +301,11 @@ void updater_impl::update_files()
 			}
 			// 清理bak文件.
 			is_need_rollback = false;
+
+			_chdir(m_setup_path.c_str());
 			for (info_map::iterator i = m_update_file_list.begin();
 				i != m_update_file_list.end(); i++) {
+					target_file = (fs::path(m_setup_path) / i->first).string();
 					if (m_abort)
 						return ;
 					if (m_paused) {
@@ -318,10 +327,10 @@ void updater_impl::update_files()
 						system(i->second.command.c_str());
 					#endif // WIN32
 					}
-					target_file = (fs::path(m_setup_path) / i->first).string() + ".bak";
-					if (fs::exists(fs::path(target_file))) {
+					std::string backup_file = target_file + ".bak";
+					if (fs::exists(fs::path(backup_file))) {
 						boost::system::error_code ec;
-						remove(fs::path(target_file), ec); // 忽略错误.
+						remove(fs::path(backup_file), ec); // 忽略错误.
 					}
 			}
 			// 修改更新结果状态.
@@ -489,6 +498,8 @@ bool updater_impl::parser_xml_file(const std::string& file)
 	node = doc.FirstChild("update_root");
 
 	if (node) {
+		m_update_file_list.clear();
+
 		element = node->ToElement();
 		int sum = atol(element->Attribute("count"));
 		int count = 0;
@@ -588,7 +599,10 @@ bool updater::check_update(const std::string& url, const std::string& setup_path
 	return m_updater->check_update(url, setup_path);
 }
 
-
+void updater::join()
+{
+	m_updater->join();
+}
 
 
 

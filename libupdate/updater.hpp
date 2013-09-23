@@ -72,9 +72,11 @@ public:
 	// @ 继续更新.
 	void resume();
 
+	// @ 等待更新完成
+	void join();
+
 	// @ 更新最后结果.
 	result_type result();
-
 private:
 	updater_impl *m_updater;
 };
