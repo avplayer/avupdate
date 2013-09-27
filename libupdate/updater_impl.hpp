@@ -75,6 +75,7 @@ public:
 	void stop();
 	void pause();
 	void resume();
+	void join();
 	updater::result_type result();
 
 protected:
