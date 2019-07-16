@@ -6,10 +6,11 @@
 #pragma once
 
 // Change these values to use different versions
-#define WINVER		0x0500
-#define _WIN32_WINNT	0x0501
-#define _WIN32_IE	0x0501
-#define _RICHEDIT_VER	0x0200
+
+// #define WINVER		0x0500
+// #define _WIN32_WINNT	0x0501
+// #define _WIN32_IE	0x0501
+// #define _RICHEDIT_VER	0x0200
 
 #define _WTL_NO_UNION_CLASSES
 #define _WTL_NO_CSTRING

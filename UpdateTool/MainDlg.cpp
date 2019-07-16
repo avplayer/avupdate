@@ -405,7 +405,7 @@ LRESULT CMainDlg::OnCheckFileComplete(UINT /*uMsg*/, WPARAM wParam, LPARAM lPara
 	for (ListXml::iterator it = m_lstXmlInfo.begin(); it != m_lstXmlInfo.end(); it++) {
 		it->strFullPath = it->strName;
 		if (strPath !=  _T("\\"))
-			it->strName.Replace(strPath, _T(''));
+			it->strName.Replace(strPath, _T(""));
 		if (m_bDropFiles) {
 			TCHAR szDir[MAX_PATH];  
 			_tcscpy_s(szDir, it->strFullPath.GetBuffer(0));

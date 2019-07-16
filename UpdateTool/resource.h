@@ -1,7 +1,5 @@
-//{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by UpdateTools.rc
-//
+#define ID_APP_ABOUT					101
+#define IDC_STATIC						-1
 #define IDD_ABOUTBOX                    100
 #define IDR_MAINFRAME                   128
 #define IDD_MAINDLG                     129
