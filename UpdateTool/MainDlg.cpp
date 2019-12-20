@@ -867,12 +867,14 @@ void CMainDlg::GenXmlFile()
          outFile += ".zip";
          m_thCompress.CompressZip(inFile.c_str(), outFile.c_str());
          fileElement->SetAttribute("compress", "zip");
+		 fileElement->SetAttribute("zipsize", boost::filesystem::file_size(outFile));
       }
       else if (xml.strCompress == _T("gz"))  // 使用gz压缩.
       {
          outFile += ".gz";
          m_thCompress.CompressGz(inFile.c_str(), outFile.c_str());
          fileElement->SetAttribute("compress", "gz");
+		 fileElement->SetAttribute("zipsize", boost::filesystem::file_size(outFile));
       }
       else                                   // 不使用压缩时,直接复制过去.
       {
